@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CountryProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.provider</a> &gt; <span class="el_source">CountryProvider.java</span></div><h1>CountryProvider.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.provider;
+
+import com.presidentio.testdatagenerator.cons.PropConst;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by Vitalii_Gergel on 2/11/2015.
+ */
+<span class="fc" id="L14">public class CountryProvider extends SelectProvider {</span>
+
+    private static String COUNTRIES;
+    public static final String DELIMITER = &quot;\r?\n&quot;;
+
+    private String getCountries() {
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (COUNTRIES == null) {</span>
+<span class="fc" id="L21">            try (InputStream nameStream = DefaultValueProviderFactory.class.getClassLoader().getResourceAsStream(&quot;country.dat&quot;)) {</span>
+<span class="fc" id="L22">                COUNTRIES = IOUtils.toString(nameStream);</span>
+<span class="nc" id="L23">            } catch (IOException e) {</span>
+<span class="nc" id="L24">                throw new RuntimeException(&quot;Failed to load names&quot;, e);</span>
+<span class="fc" id="L25">            }</span>
+        }
+<span class="fc" id="L27">        return COUNTRIES;</span>
+    }
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="fc" id="L32">        Map&lt;String, String&gt; propsCopy = new HashMap&lt;&gt;(props);</span>
+<span class="fc" id="L33">        propsCopy.put(PropConst.ITEMS, getCountries());</span>
+<span class="fc" id="L34">        propsCopy.put(PropConst.DELIMITER, DELIMITER);</span>
+<span class="fc" id="L35">        super.init(propsCopy);</span>
+<span class="fc" id="L36">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

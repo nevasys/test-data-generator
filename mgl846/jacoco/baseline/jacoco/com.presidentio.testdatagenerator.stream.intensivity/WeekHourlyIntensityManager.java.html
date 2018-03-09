@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeekHourlyIntensityManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.stream.intensivity</a> &gt; <span class="el_source">WeekHourlyIntensityManager.java</span></div><h1>WeekHourlyIntensityManager.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.stream.intensivity;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by presidentio on 24.04.15.
+ */
+<span class="nc" id="L10">public class WeekHourlyIntensityManager implements IntensityManager {</span>
+
+<span class="nc" id="L12">    private static final long MILLIS_IN_HOUR = TimeUnit.HOURS.toMillis(1);</span>
+    private static final long HOURS_IN_WEEK = 24 * 7;
+
+    private Long[] tickPerHour;
+
+    private int curHourOfWeek;
+    private long curHourStart;
+    private long curHourTicks;
+    private long curMillisPerTick;
+
+    @Override
+    public void waitNext() {
+<span class="nc" id="L24">        updateCurHourInfo();</span>
+<span class="nc" id="L25">        long timeFromHourStart = System.currentTimeMillis() - curHourStart;</span>
+<span class="nc" id="L26">        long timeToWait = curMillisPerTick * curHourTicks - timeFromHourStart;</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (timeToWait &lt;= 0) {</span>
+<span class="nc" id="L28">            return;</span>
+        } else {
+            try {
+<span class="nc" id="L31">                Thread.sleep(timeToWait);</span>
+<span class="nc" id="L32">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L33">                e.printStackTrace();</span>
+<span class="nc" id="L34">            }</span>
+        }
+<span class="nc" id="L36">    }</span>
+
+    private void updateCurHourInfo() {
+<span class="nc" id="L39">        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(&quot;UTC&quot;));</span>
+<span class="nc" id="L40">        long newCurHourStart = calendar.getTimeInMillis() - calendar.getTimeInMillis() % MILLIS_IN_HOUR;</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (newCurHourStart != curHourStart) {</span>
+<span class="nc" id="L42">            curHourStart = newCurHourStart;</span>
+<span class="nc" id="L43">            curHourOfWeek = hourOfWeek(curHourStart);</span>
+<span class="nc" id="L44">            curHourTicks = 0;</span>
+<span class="nc" id="L45">            curMillisPerTick = MILLIS_IN_HOUR / tickPerHour[curHourOfWeek];</span>
+        }
+<span class="nc" id="L47">        curHourTicks++;</span>
+<span class="nc" id="L48">    }</span>
+
+    private int hourOfWeek(long hourStartInMillis) {
+<span class="nc" id="L51">        return (int) (hourStartInMillis % HOURS_IN_WEEK + 24 + (hourStartInMillis % 24));</span>
+    }
+
+    public Long[] getTickPerHour() {
+<span class="nc" id="L55">        return tickPerHour;</span>
+    }
+
+    public void setTickPerHour(Long[] tickPerHour) {
+<span class="nc" id="L59">        this.tickPerHour = tickPerHour;</span>
+<span class="nc" id="L60">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

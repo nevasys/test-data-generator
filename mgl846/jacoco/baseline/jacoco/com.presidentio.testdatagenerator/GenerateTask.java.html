@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenerateTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator</a> &gt; <span class="el_source">GenerateTask.java</span></div><h1>GenerateTask.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator;
+
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+import com.presidentio.testdatagenerator.model.Template;
+import com.presidentio.testdatagenerator.provider.ValueProvider;
+import com.presidentio.testdatagenerator.provider.ValueProviderFactory;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.RecursiveAction;
+
+public class GenerateTask extends RecursiveAction {
+
+<span class="fc" id="L29">    private boolean async = true;</span>
+
+    private Context context;
+    private Template template;
+    private ValueProviderFactory valueProviderFactory;
+
+<span class="fc" id="L35">    public GenerateTask(Context context, Template template, ValueProviderFactory valueProviderFactory) {</span>
+<span class="fc" id="L36">        this.context = context;</span>
+<span class="fc" id="L37">        this.template = template;</span>
+<span class="fc" id="L38">        this.valueProviderFactory = valueProviderFactory;</span>
+<span class="fc" id="L39">    }</span>
+
+    private void generateEntity(final Context context, final Template template) {
+<span class="fc" id="L42">        List&lt;GenerateTask&gt; forkJoinTasks = new ArrayList&lt;&gt;(template.getCount());</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (int i = 0; i &lt; template.getCount(); i++) {</span>
+<span class="fc" id="L44">            Map&lt;String, Object&gt; entity = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            for (Field field : template.getFields()) {</span>
+<span class="fc" id="L46">                ValueProvider valueProvider = valueProviderFactory.buildValueProvider(field.getProvider());</span>
+<span class="fc" id="L47">                entity.put(field.getName(), valueProvider.nextValue(context, field));</span>
+<span class="fc" id="L48">            }</span>
+<span class="fc" id="L49">            context.getSink().process(template, entity);</span>
+<span class="fc" id="L50">            final Context childContext = new Context(context, entity);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            for (String childTemplateId : template.getChilds()) {</span>
+<span class="fc" id="L52">                final Template childTemplate = context.getTemplates().get(childTemplateId);</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                if (childTemplate == null) {</span>
+<span class="nc" id="L54">                    throw new IllegalArgumentException(&quot;Template with id does not defined: &quot; + childTemplateId);</span>
+                }
+
+<span class="fc" id="L57">                GenerateTask task = new GenerateTask(childContext, childTemplate, valueProviderFactory);</span>
+<span class="fc" id="L58">                task.setAsync(async);</span>
+<span class="fc" id="L59">                forkJoinTasks.add(task);</span>
+<span class="fc" id="L60">            }</span>
+        }
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (async) {</span>
+<span class="nc" id="L63">            invokeAll(forkJoinTasks);</span>
+        } else {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            for (GenerateTask forkJoinTask : forkJoinTasks) {</span>
+<span class="fc" id="L66">                forkJoinTask.compute();</span>
+<span class="fc" id="L67">            }</span>
+        }
+<span class="fc" id="L69">    }</span>
+
+    public boolean isAsync() {
+<span class="nc" id="L72">        return async;</span>
+    }
+
+    public void setAsync(boolean async) {
+<span class="fc" id="L76">        this.async = async;</span>
+<span class="fc" id="L77">    }</span>
+
+    @Override
+    public void compute() {
+<span class="fc" id="L81">        generateEntity(context, template);</span>
+<span class="fc" id="L82">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

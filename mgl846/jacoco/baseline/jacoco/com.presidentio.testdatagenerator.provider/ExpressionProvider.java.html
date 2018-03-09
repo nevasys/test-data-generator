@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpressionProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.provider</a> &gt; <span class="el_source">ExpressionProvider.java</span></div><h1>ExpressionProvider.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.provider;
+
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.cons.TypeConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+import org.mvel2.MVEL;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="fc" id="L26">public class ExpressionProvider implements ValueProvider {</span>
+
+    private String expr;
+    private Serializable compiledExpression;
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="fc" id="L33">        Map&lt;String, String&gt; propsCopy = new HashMap&lt;&gt;(props);</span>
+<span class="fc" id="L34">        expr = propsCopy.remove(PropConst.EXPR);</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (expr == null) {</span>
+<span class="nc" id="L36">            throw new IllegalArgumentException(&quot;Value does not specified or null&quot;);</span>
+        }
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (!propsCopy.isEmpty()) {</span>
+<span class="nc" id="L39">            throw new IllegalArgumentException(&quot;Redundant props for &quot; + getClass().getName() + &quot;: &quot; + propsCopy);</span>
+        }
+<span class="fc" id="L41">        compiledExpression = MVEL.compileExpression(expr);</span>
+<span class="fc" id="L42">    }</span>
+
+    @Override
+    public Object nextValue(Context context, Field field) {
+        Class type;
+<span class="pc bpc" id="L47" title="1 of 5 branches missed.">        switch (field.getType()) {</span>
+            case TypeConst.STRING:
+<span class="fc" id="L49">                type = String.class;</span>
+<span class="fc" id="L50">                break;</span>
+            case TypeConst.LONG:
+<span class="fc" id="L52">                type = Long.class;</span>
+<span class="fc" id="L53">                break;</span>
+            case TypeConst.INT:
+<span class="fc" id="L55">                type = Integer.class;</span>
+<span class="fc" id="L56">                break;</span>
+            case TypeConst.BOOLEAN:
+<span class="fc" id="L58">                type = Boolean.class;</span>
+<span class="fc" id="L59">                break;</span>
+            default:
+<span class="nc" id="L61">                throw new IllegalArgumentException(&quot;Field type not known: &quot; + field.getType());</span>
+        }
+<span class="fc" id="L63">        synchronized (context.getVariables()) {</span>
+<span class="fc" id="L64">            return MVEL.executeExpression(compiledExpression, context, context.getVariables(), type);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

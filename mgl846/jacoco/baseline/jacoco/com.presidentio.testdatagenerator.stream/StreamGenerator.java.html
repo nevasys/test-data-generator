@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreamGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.stream</a> &gt; <span class="el_source">StreamGenerator.java</span></div><h1>StreamGenerator.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.stream;
+
+import com.presidentio.testdatagenerator.AbstractGenerator;
+import com.presidentio.testdatagenerator.GenerateTask;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Schema;
+import com.presidentio.testdatagenerator.model.Template;
+import com.presidentio.testdatagenerator.stream.intensivity.FixedIntervalIntensityManager;
+import com.presidentio.testdatagenerator.stream.intensivity.IntensityManager;
+import com.presidentio.testdatagenerator.stream.stop.InfiniteStopManager;
+import com.presidentio.testdatagenerator.stream.stop.StopManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * Created by presidentio on 24.04.15.
+ */
+<span class="nc" id="L20">public class StreamGenerator extends AbstractGenerator {</span>
+
+<span class="nc" id="L22">    private Random random = new Random();</span>
+
+    private List&lt;Template&gt; rootTemplates;
+
+    private int weightSum;
+
+    private StopManager stopManager;
+    private IntensityManager intensityManager;
+
+    @Override
+    public void generate(Context context, Schema schema) {
+<span class="nc" id="L33">        stopManager = buildStopManager();</span>
+<span class="nc" id="L34">        intensityManager = buildIntensityManager();</span>
+<span class="nc" id="L35">        rootTemplates = new ArrayList&lt;&gt;(schema.getRoot().size());</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        for (String rootTemplateId : schema.getRoot()) {</span>
+<span class="nc" id="L37">            final Template rootTemplate = context.getTemplates().get(rootTemplateId);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">            if (rootTemplate == null) {</span>
+<span class="nc" id="L39">                throw new IllegalArgumentException(&quot;Template with id does not defined: &quot; + rootTemplateId);</span>
+            }
+<span class="nc" id="L41">            weightSum += rootTemplate.getCount();</span>
+<span class="nc" id="L42">            rootTemplates.add(rootTemplate);</span>
+<span class="nc" id="L43">        }</span>
+<span class="nc" id="L44">        startGeneration(context);</span>
+<span class="nc" id="L45">    }</span>
+
+    private void startGeneration(Context context) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        while (!stopManager.isStop(context)) {</span>
+<span class="nc" id="L49">            int randIndex = random.nextInt(weightSum);</span>
+<span class="nc" id="L50">            int curIndex = 0;</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            for (Template rootTemplate : rootTemplates) {</span>
+<span class="nc" id="L52">                curIndex += rootTemplate.getCount();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">                if (curIndex &gt; randIndex) {</span>
+<span class="nc" id="L54">                    GenerateTask task = new GenerateTask(context, rootTemplate, getValueProviderFactory());</span>
+<span class="nc" id="L55">                    task.setAsync(false);</span>
+<span class="nc" id="L56">                    task.compute();</span>
+<span class="nc" id="L57">                    break;</span>
+                }
+<span class="nc" id="L59">            }</span>
+<span class="nc" id="L60">            intensityManager.waitNext();</span>
+<span class="nc" id="L61">        }</span>
+<span class="nc" id="L62">    }</span>
+
+    private StopManager buildStopManager() {
+<span class="nc" id="L65">        return new InfiniteStopManager();</span>
+    }
+
+    private IntensityManager buildIntensityManager() {
+<span class="nc" id="L69">        return new FixedIntervalIntensityManager();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

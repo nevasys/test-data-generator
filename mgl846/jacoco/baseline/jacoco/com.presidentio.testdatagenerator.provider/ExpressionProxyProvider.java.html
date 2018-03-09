@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpressionProxyProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.provider</a> &gt; <span class="el_source">ExpressionProxyProvider.java</span></div><h1>ExpressionProxyProvider.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.provider;
+
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+<span class="fc" id="L25">public class ExpressionProxyProvider implements ValueProvider {</span>
+
+<span class="fc" id="L27">    private static final Pattern PARENT_EXP = Pattern.compile(&quot;(parent\\.)+(\\w+)&quot;);</span>
+<span class="fc" id="L28">    private static final Pattern COUNTER_INC = Pattern.compile(&quot;(\\w+)\\+\\+&quot;);</span>
+
+    private String expr;
+    private ValueProvider valueProvider;
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="fc" id="L35">        Map&lt;String, String&gt; propsCopy = new HashMap&lt;&gt;(props);</span>
+<span class="fc" id="L36">        expr = propsCopy.remove(PropConst.EXPR);</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (expr == null) {</span>
+<span class="nc" id="L38">            throw new IllegalArgumentException(&quot;Value does not specified or null&quot;);</span>
+        }
+<span class="fc" id="L40">        Matcher matcher = PARENT_EXP.matcher(expr);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc" id="L42">            valueProvider = new ParentProvider();</span>
+<span class="fc" id="L43">            Map&lt;String, String&gt; params = new HashMap&lt;&gt;(2);</span>
+<span class="fc" id="L44">            params.put(PropConst.DEPTH, &quot;&quot; + countOccurrence(expr, '.'));</span>
+<span class="fc" id="L45">            params.put(PropConst.FIELD, matcher.group(2));</span>
+<span class="fc" id="L46">            valueProvider.init(params);</span>
+<span class="fc" id="L47">        } else {</span>
+<span class="fc" id="L48">            matcher = COUNTER_INC.matcher(expr);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L50">                Map&lt;String, String&gt; params = new HashMap&lt;&gt;(1);</span>
+<span class="fc" id="L51">                params.put(PropConst.VAR, matcher.group(1));</span>
+<span class="fc" id="L52">                valueProvider = new CounterProvider();</span>
+<span class="fc" id="L53">                valueProvider.init(params);</span>
+<span class="fc" id="L54">            } else {</span>
+<span class="fc" id="L55">                valueProvider = new ExpressionProvider();</span>
+<span class="fc" id="L56">                valueProvider.init(props);</span>
+            }
+        }
+<span class="fc" id="L59">    }</span>
+
+    @Override
+    public Object nextValue(Context context, Field field) {
+<span class="fc" id="L63">        return valueProvider.nextValue(context, field);</span>
+    }
+
+    private int countOccurrence(String str, char part) {
+<span class="fc" id="L67">        int count = 0;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (int i = 0; i &lt; str.length(); i++) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (str.charAt(i) == part) {</span>
+<span class="fc" id="L70">                count++;</span>
+            }
+        }
+<span class="fc" id="L73">        return count;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

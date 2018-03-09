@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpressionProxyBenchmark_measureCounter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.benchmark.generated</a> &gt; <span class="el_source">ExpressionProxyBenchmark_measureCounter.java</span></div><h1>ExpressionProxyBenchmark_measureCounter.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.benchmark.generated;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+import org.openjdk.jmh.annotations.CompilerControl;
+import org.openjdk.jmh.runner.InfraControl;
+import org.openjdk.jmh.infra.ThreadParams;
+import org.openjdk.jmh.results.Result;
+import org.openjdk.jmh.results.ThroughputResult;
+import org.openjdk.jmh.results.AverageTimeResult;
+import org.openjdk.jmh.results.SampleTimeResult;
+import org.openjdk.jmh.results.SingleShotResult;
+import org.openjdk.jmh.util.SampleBuffer;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.results.RawResults;
+import org.openjdk.jmh.results.ResultRole;
+import java.lang.reflect.Field;
+import org.openjdk.jmh.infra.BenchmarkParams;
+import org.openjdk.jmh.infra.IterationParams;
+
+import org.openjdk.jmh.infra.generated.Blackhole_jmh;
+import com.presidentio.testdatagenerator.benchmark.generated.ExpressionProxyBenchmark_jmh;
+@Generated(&quot;org.openjdk.jmh.generators.core.BenchmarkGenerator&quot;)
+<span class="nc" id="L33">public final class ExpressionProxyBenchmark_measureCounter {</span>
+
+    boolean p000, p001, p002, p003, p004, p005, p006, p007, p008, p009, p010, p011, p012, p013, p014, p015;
+    boolean p016, p017, p018, p019, p020, p021, p022, p023, p024, p025, p026, p027, p028, p029, p030, p031;
+    boolean p032, p033, p034, p035, p036, p037, p038, p039, p040, p041, p042, p043, p044, p045, p046, p047;
+    boolean p048, p049, p050, p051, p052, p053, p054, p055, p056, p057, p058, p059, p060, p061, p062, p063;
+    boolean p064, p065, p066, p067, p068, p069, p070, p071, p072, p073, p074, p075, p076, p077, p078, p079;
+    boolean p080, p081, p082, p083, p084, p085, p086, p087, p088, p089, p090, p091, p092, p093, p094, p095;
+    boolean p096, p097, p098, p099, p100, p101, p102, p103, p104, p105, p106, p107, p108, p109, p110, p111;
+    boolean p112, p113, p114, p115, p116, p117, p118, p119, p120, p121, p122, p123, p124, p125, p126, p127;
+    boolean p128, p129, p130, p131, p132, p133, p134, p135, p136, p137, p138, p139, p140, p141, p142, p143;
+    boolean p144, p145, p146, p147, p148, p149, p150, p151, p152, p153, p154, p155, p156, p157, p158, p159;
+    boolean p160, p161, p162, p163, p164, p165, p166, p167, p168, p169, p170, p171, p172, p173, p174, p175;
+    boolean p176, p177, p178, p179, p180, p181, p182, p183, p184, p185, p186, p187, p188, p189, p190, p191;
+    boolean p192, p193, p194, p195, p196, p197, p198, p199, p200, p201, p202, p203, p204, p205, p206, p207;
+    boolean p208, p209, p210, p211, p212, p213, p214, p215, p216, p217, p218, p219, p220, p221, p222, p223;
+    boolean p224, p225, p226, p227, p228, p229, p230, p231, p232, p233, p234, p235, p236, p237, p238, p239;
+    boolean p240, p241, p242, p243, p244, p245, p246, p247, p248, p249, p250, p251, p252, p253, p254, p255;
+    int startRndMask;
+
+    public Collection&lt;ThroughputResult&gt; measureCounter_Throughput(InfraControl control, ThreadParams threadParams) throws Throwable {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (threadParams.getSubgroupIndex() == 0) {</span>
+<span class="nc" id="L55">            Blackhole_jmh l_blackhole1_0 = _jmh_tryInit_f_blackhole1_0(control, threadParams);</span>
+<span class="nc" id="L56">            ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G = _jmh_tryInit_f_expressionproxybenchmark0_G(control, threadParams);</span>
+
+<span class="nc" id="L58">            control.preSetup();</span>
+<span class="nc" id="L59">            l_blackhole1_0.clearSinks();</span>
+
+<span class="nc" id="L61">            control.announceWarmupReady();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            while (control.warmupShouldWait) {</span>
+<span class="nc" id="L63">                l_expressionproxybenchmark0_G.measureCounter();</span>
+            }
+
+<span class="nc" id="L66">            RawResults res = new RawResults(control.benchmarkParams.getOpsPerInvocation());</span>
+<span class="nc" id="L67">            measureCounter_thrpt_jmhStub(control, res, l_expressionproxybenchmark0_G, l_blackhole1_0);</span>
+<span class="nc" id="L68">            res.operations /= control.iterationParams.getBatchSize();</span>
+<span class="nc" id="L69">            control.announceWarmdownReady();</span>
+            try {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                while (control.warmdownShouldWait) {</span>
+<span class="nc" id="L72">                    l_expressionproxybenchmark0_G.measureCounter();</span>
+                }
+<span class="nc" id="L74">                control.preTearDown();</span>
+<span class="nc" id="L75">            } catch (InterruptedException ie) {</span>
+<span class="nc" id="L76">                control.preTearDownForce();</span>
+<span class="nc" id="L77">            }</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            if (control.isLastIteration()) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                while(!ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.compareAndSet(l_expressionproxybenchmark0_G, 0, 1)) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                    if (Thread.interrupted()) throw new InterruptedException();</span>
+                }
+                try {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                    if (l_expressionproxybenchmark0_G.readyTrial) {</span>
+<span class="nc" id="L85">                        l_expressionproxybenchmark0_G.readyTrial = false;</span>
+                    }
+                } finally {
+<span class="nc" id="L88">                    ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.set(l_expressionproxybenchmark0_G, 0);</span>
+                }
+<span class="nc" id="L90">                synchronized(this.getClass()) {</span>
+<span class="nc" id="L91">                    f_expressionproxybenchmark0_G = null;</span>
+<span class="nc" id="L92">                }</span>
+<span class="nc" id="L93">                f_blackhole1_0 = null;</span>
+            }
+<span class="nc" id="L95">            Collection&lt;ThroughputResult&gt; results = new ArrayList&lt;ThroughputResult&gt;();</span>
+<span class="nc" id="L96">            results.add(new ThroughputResult(ResultRole.PRIMARY, &quot;measureCounter&quot;, res.getOperations(), res.getTime(), control.benchmarkParams.getTimeUnit()));</span>
+<span class="nc" id="L97">            return results;</span>
+        } else
+<span class="nc" id="L99">            throw new IllegalStateException(&quot;Harness failed to distribute threads among groups properly&quot;);</span>
+    }
+
+    public void measureCounter_thrpt_jmhStub(InfraControl control, RawResults result, ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G, Blackhole_jmh l_blackhole1_0) throws Throwable {
+<span class="nc" id="L103">        long operations = 0;</span>
+<span class="nc" id="L104">        long realTime = 0;</span>
+<span class="nc" id="L105">        result.startTime = System.nanoTime();</span>
+        do {
+<span class="nc" id="L107">            l_expressionproxybenchmark0_G.measureCounter();</span>
+<span class="nc" id="L108">            operations++;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        } while(!control.isDone);</span>
+<span class="nc" id="L110">        result.stopTime = System.nanoTime();</span>
+<span class="nc" id="L111">        result.realTime = realTime;</span>
+<span class="nc" id="L112">        result.operations = operations;</span>
+<span class="nc" id="L113">    }</span>
+
+
+    public Collection&lt;AverageTimeResult&gt; measureCounter_AverageTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (threadParams.getSubgroupIndex() == 0) {</span>
+<span class="nc" id="L118">            Blackhole_jmh l_blackhole1_0 = _jmh_tryInit_f_blackhole1_0(control, threadParams);</span>
+<span class="nc" id="L119">            ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G = _jmh_tryInit_f_expressionproxybenchmark0_G(control, threadParams);</span>
+
+<span class="nc" id="L121">            control.preSetup();</span>
+<span class="nc" id="L122">            l_blackhole1_0.clearSinks();</span>
+
+<span class="nc" id="L124">            control.announceWarmupReady();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            while (control.warmupShouldWait) {</span>
+<span class="nc" id="L126">                l_expressionproxybenchmark0_G.measureCounter();</span>
+            }
+
+<span class="nc" id="L129">            RawResults res = new RawResults(control.benchmarkParams.getOpsPerInvocation());</span>
+<span class="nc" id="L130">            measureCounter_avgt_jmhStub(control, res, l_expressionproxybenchmark0_G, l_blackhole1_0);</span>
+<span class="nc" id="L131">            res.operations /= control.iterationParams.getBatchSize();</span>
+<span class="nc" id="L132">            control.announceWarmdownReady();</span>
+            try {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                while (control.warmdownShouldWait) {</span>
+<span class="nc" id="L135">                    l_expressionproxybenchmark0_G.measureCounter();</span>
+                }
+<span class="nc" id="L137">                control.preTearDown();</span>
+<span class="nc" id="L138">            } catch (InterruptedException ie) {</span>
+<span class="nc" id="L139">                control.preTearDownForce();</span>
+<span class="nc" id="L140">            }</span>
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            if (control.isLastIteration()) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                while(!ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.compareAndSet(l_expressionproxybenchmark0_G, 0, 1)) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                    if (Thread.interrupted()) throw new InterruptedException();</span>
+                }
+                try {
+<span class="nc bnc" id="L147" title="All 2 branches missed.">                    if (l_expressionproxybenchmark0_G.readyTrial) {</span>
+<span class="nc" id="L148">                        l_expressionproxybenchmark0_G.readyTrial = false;</span>
+                    }
+                } finally {
+<span class="nc" id="L151">                    ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.set(l_expressionproxybenchmark0_G, 0);</span>
+                }
+<span class="nc" id="L153">                synchronized(this.getClass()) {</span>
+<span class="nc" id="L154">                    f_expressionproxybenchmark0_G = null;</span>
+<span class="nc" id="L155">                }</span>
+<span class="nc" id="L156">                f_blackhole1_0 = null;</span>
+            }
+<span class="nc" id="L158">            Collection&lt;AverageTimeResult&gt; results = new ArrayList&lt;AverageTimeResult&gt;();</span>
+<span class="nc" id="L159">            results.add(new AverageTimeResult(ResultRole.PRIMARY, &quot;measureCounter&quot;, res.getOperations(), res.getTime(), control.benchmarkParams.getTimeUnit()));</span>
+<span class="nc" id="L160">            return results;</span>
+        } else
+<span class="nc" id="L162">            throw new IllegalStateException(&quot;Harness failed to distribute threads among groups properly&quot;);</span>
+    }
+
+    public void measureCounter_avgt_jmhStub(InfraControl control, RawResults result, ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G, Blackhole_jmh l_blackhole1_0) throws Throwable {
+<span class="nc" id="L166">        long operations = 0;</span>
+<span class="nc" id="L167">        long realTime = 0;</span>
+<span class="nc" id="L168">        result.startTime = System.nanoTime();</span>
+        do {
+<span class="nc" id="L170">            l_expressionproxybenchmark0_G.measureCounter();</span>
+<span class="nc" id="L171">            operations++;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        } while(!control.isDone);</span>
+<span class="nc" id="L173">        result.stopTime = System.nanoTime();</span>
+<span class="nc" id="L174">        result.realTime = realTime;</span>
+<span class="nc" id="L175">        result.operations = operations;</span>
+<span class="nc" id="L176">    }</span>
+
+
+    public Collection&lt;SampleTimeResult&gt; measureCounter_SampleTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (threadParams.getSubgroupIndex() == 0) {</span>
+<span class="nc" id="L181">            Blackhole_jmh l_blackhole1_0 = _jmh_tryInit_f_blackhole1_0(control, threadParams);</span>
+<span class="nc" id="L182">            ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G = _jmh_tryInit_f_expressionproxybenchmark0_G(control, threadParams);</span>
+
+<span class="nc" id="L184">            control.preSetup();</span>
+<span class="nc" id="L185">            l_blackhole1_0.clearSinks();</span>
+
+<span class="nc" id="L187">            control.announceWarmupReady();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            while (control.warmupShouldWait) {</span>
+<span class="nc" id="L189">                l_expressionproxybenchmark0_G.measureCounter();</span>
+            }
+
+<span class="nc" id="L192">            int targetSamples = (int) (control.getDuration(TimeUnit.MILLISECONDS) * 20); // at max, 20 timestamps per millisecond</span>
+<span class="nc" id="L193">            int batchSize = control.iterationParams.getBatchSize();</span>
+<span class="nc" id="L194">            SampleBuffer buffer = new SampleBuffer();</span>
+<span class="nc" id="L195">            measureCounter_sample_jmhStub(control, buffer, targetSamples, control.benchmarkParams.getOpsPerInvocation(), batchSize, l_expressionproxybenchmark0_G, l_blackhole1_0);</span>
+<span class="nc" id="L196">            control.announceWarmdownReady();</span>
+            try {
+<span class="nc bnc" id="L198" title="All 2 branches missed.">                while (control.warmdownShouldWait) {</span>
+<span class="nc" id="L199">                    l_expressionproxybenchmark0_G.measureCounter();</span>
+                }
+<span class="nc" id="L201">                control.preTearDown();</span>
+<span class="nc" id="L202">            } catch (InterruptedException ie) {</span>
+<span class="nc" id="L203">                control.preTearDownForce();</span>
+<span class="nc" id="L204">            }</span>
+
+<span class="nc bnc" id="L206" title="All 2 branches missed.">            if (control.isLastIteration()) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                while(!ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.compareAndSet(l_expressionproxybenchmark0_G, 0, 1)) {</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                    if (Thread.interrupted()) throw new InterruptedException();</span>
+                }
+                try {
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                    if (l_expressionproxybenchmark0_G.readyTrial) {</span>
+<span class="nc" id="L212">                        l_expressionproxybenchmark0_G.readyTrial = false;</span>
+                    }
+                } finally {
+<span class="nc" id="L215">                    ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.set(l_expressionproxybenchmark0_G, 0);</span>
+                }
+<span class="nc" id="L217">                synchronized(this.getClass()) {</span>
+<span class="nc" id="L218">                    f_expressionproxybenchmark0_G = null;</span>
+<span class="nc" id="L219">                }</span>
+<span class="nc" id="L220">                f_blackhole1_0 = null;</span>
+            }
+<span class="nc" id="L222">            Collection&lt;SampleTimeResult&gt; results = new ArrayList&lt;SampleTimeResult&gt;();</span>
+<span class="nc" id="L223">            results.add(new SampleTimeResult(ResultRole.PRIMARY, &quot;measureCounter&quot;, buffer, control.benchmarkParams.getTimeUnit()));</span>
+<span class="nc" id="L224">            return results;</span>
+        } else
+<span class="nc" id="L226">            throw new IllegalStateException(&quot;Harness failed to distribute threads among groups properly&quot;);</span>
+    }
+
+    public void measureCounter_sample_jmhStub(InfraControl control, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G, Blackhole_jmh l_blackhole1_0) throws Throwable {
+<span class="nc" id="L230">        long realTime = 0;</span>
+<span class="nc" id="L231">        int rnd = (int)System.nanoTime();</span>
+<span class="nc" id="L232">        int rndMask = startRndMask;</span>
+<span class="nc" id="L233">        long time = 0;</span>
+<span class="nc" id="L234">        int currentStride = 0;</span>
+        do {
+<span class="nc" id="L236">            rnd = (rnd * 1664525 + 1013904223);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">            boolean sample = (rnd &amp; rndMask) == 0;</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">            if (sample) {</span>
+<span class="nc" id="L239">                time = System.nanoTime();</span>
+            }
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            for (int b = 0; b &lt; batchSize; b++) {</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">                if (control.volatileSpoiler) return;</span>
+<span class="nc" id="L243">                l_expressionproxybenchmark0_G.measureCounter();</span>
+            }
+<span class="nc bnc" id="L245" title="All 2 branches missed.">            if (sample) {</span>
+<span class="nc" id="L246">                buffer.add((System.nanoTime() - time) / opsPerInv);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">                if (currentStride++ &gt; targetSamples) {</span>
+<span class="nc" id="L248">                    buffer.half();</span>
+<span class="nc" id="L249">                    currentStride = 0;</span>
+<span class="nc" id="L250">                    rndMask = (rndMask &lt;&lt; 1) + 1;</span>
+                }
+            }
+<span class="nc bnc" id="L253" title="All 2 branches missed.">        } while(!control.isDone);</span>
+<span class="nc" id="L254">        startRndMask = Math.max(startRndMask, rndMask);</span>
+<span class="nc" id="L255">    }</span>
+
+
+    public Collection&lt;SingleShotResult&gt; measureCounter_SingleShotTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        if (threadParams.getSubgroupIndex() == 0) {</span>
+<span class="nc" id="L260">            Blackhole_jmh l_blackhole1_0 = _jmh_tryInit_f_blackhole1_0(control, threadParams);</span>
+<span class="nc" id="L261">            ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G = _jmh_tryInit_f_expressionproxybenchmark0_G(control, threadParams);</span>
+
+<span class="nc" id="L263">            control.preSetup();</span>
+<span class="nc" id="L264">            l_blackhole1_0.clearSinks();</span>
+
+<span class="nc" id="L266">            RawResults res = new RawResults(control.benchmarkParams.getOpsPerInvocation());</span>
+<span class="nc" id="L267">            int batchSize = control.iterationParams.getBatchSize();</span>
+<span class="nc" id="L268">            measureCounter_ss_jmhStub(control, batchSize, res, l_expressionproxybenchmark0_G, l_blackhole1_0);</span>
+<span class="nc" id="L269">            control.preTearDown();</span>
+
+<span class="nc bnc" id="L271" title="All 2 branches missed.">            if (control.isLastIteration()) {</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">                while(!ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.compareAndSet(l_expressionproxybenchmark0_G, 0, 1)) {</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">                    if (Thread.interrupted()) throw new InterruptedException();</span>
+                }
+                try {
+<span class="nc bnc" id="L276" title="All 2 branches missed.">                    if (l_expressionproxybenchmark0_G.readyTrial) {</span>
+<span class="nc" id="L277">                        l_expressionproxybenchmark0_G.readyTrial = false;</span>
+                    }
+                } finally {
+<span class="nc" id="L280">                    ExpressionProxyBenchmark_jmh.tearTrialMutexUpdater.set(l_expressionproxybenchmark0_G, 0);</span>
+                }
+<span class="nc" id="L282">                synchronized(this.getClass()) {</span>
+<span class="nc" id="L283">                    f_expressionproxybenchmark0_G = null;</span>
+<span class="nc" id="L284">                }</span>
+<span class="nc" id="L285">                f_blackhole1_0 = null;</span>
+            }
+<span class="nc" id="L287">            Collection&lt;SingleShotResult&gt; results = new ArrayList&lt;SingleShotResult&gt;();</span>
+<span class="nc" id="L288">            results.add(new SingleShotResult(ResultRole.PRIMARY, &quot;measureCounter&quot;, res.getTime(), control.benchmarkParams.getTimeUnit()));</span>
+<span class="nc" id="L289">            return results;</span>
+        } else
+<span class="nc" id="L291">            throw new IllegalStateException(&quot;Harness failed to distribute threads among groups properly&quot;);</span>
+    }
+
+    public void measureCounter_ss_jmhStub(InfraControl control, int batchSize, RawResults result, ExpressionProxyBenchmark_jmh l_expressionproxybenchmark0_G, Blackhole_jmh l_blackhole1_0) throws Throwable {
+<span class="nc" id="L295">        long realTime = 0;</span>
+<span class="nc" id="L296">        result.startTime = System.nanoTime();</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">        for (int b = 0; b &lt; batchSize; b++) {</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">            if (control.volatileSpoiler) return;</span>
+<span class="nc" id="L299">            l_expressionproxybenchmark0_G.measureCounter();</span>
+        }
+<span class="nc" id="L301">        result.stopTime = System.nanoTime();</span>
+<span class="nc" id="L302">        result.realTime = realTime;</span>
+<span class="nc" id="L303">    }</span>
+
+    
+    static volatile ExpressionProxyBenchmark_jmh f_expressionproxybenchmark0_G;
+    
+    ExpressionProxyBenchmark_jmh _jmh_tryInit_f_expressionproxybenchmark0_G(InfraControl control, ThreadParams threadParams) throws Throwable {
+<span class="nc" id="L309">        ExpressionProxyBenchmark_jmh val = f_expressionproxybenchmark0_G;</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">        if (val != null) {</span>
+<span class="nc" id="L311">            return val;</span>
+        }
+<span class="nc" id="L313">        synchronized(this.getClass()) {</span>
+<span class="nc" id="L314">            val = f_expressionproxybenchmark0_G;</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">            if (val != null) {</span>
+<span class="nc" id="L316">                return val;</span>
+            }
+<span class="nc" id="L318">            val = new ExpressionProxyBenchmark_jmh();</span>
+<span class="nc" id="L319">            val.init();</span>
+<span class="nc" id="L320">            val.readyTrial = true;</span>
+<span class="nc" id="L321">            f_expressionproxybenchmark0_G = val;</span>
+<span class="nc" id="L322">        }</span>
+<span class="nc" id="L323">        return val;</span>
+    }
+    
+    Blackhole_jmh f_blackhole1_0;
+    
+    Blackhole_jmh _jmh_tryInit_f_blackhole1_0(InfraControl control, ThreadParams threadParams) throws Throwable {
+<span class="nc" id="L329">        Blackhole_jmh val = f_blackhole1_0;</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">        if (val == null) {</span>
+<span class="nc" id="L331">            val = new Blackhole_jmh();</span>
+<span class="nc" id="L332">            f_blackhole1_0 = val;</span>
+        }
+<span class="nc" id="L334">        return val;</span>
+    }
+
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

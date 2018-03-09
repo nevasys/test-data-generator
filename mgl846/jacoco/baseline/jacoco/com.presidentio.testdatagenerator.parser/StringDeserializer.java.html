@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringDeserializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.parser</a> &gt; <span class="el_source">StringDeserializer.java</span></div><h1>StringDeserializer.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.parser;
+
+import com.presidentio.testdatagenerator.cons.StringPlaceholderConst;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.map.DeserializationContext;
+import org.codehaus.jackson.map.JsonDeserializer;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+<span class="fc" id="L12">public class StringDeserializer extends JsonDeserializer&lt;String&gt; {</span>
+
+<span class="fc" id="L14">    private static final Pattern REGEX = Pattern.compile(&quot;\\$\\{(\\w+)}&quot;);</span>
+
+    @Override
+    public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+            throws IOException {
+<span class="fc" id="L19">        String str = jsonParser.getText();</span>
+<span class="fc" id="L20">        return formatString(str);</span>
+    }
+
+    public String formatString(String s) {
+<span class="fc" id="L24">        Matcher matcher = REGEX.matcher(s);</span>
+<span class="fc" id="L25">        StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L26">        int curIndex = 0;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        while (matcher.find()) {</span>
+<span class="fc" id="L28">            String group = matcher.group(1);</span>
+<span class="fc" id="L29">            result.append(s.substring(curIndex, matcher.start()));</span>
+<span class="fc" id="L30">            result.append(evaluate(group));</span>
+<span class="fc" id="L31">            curIndex = matcher.end();</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">        result.append(s.substring(curIndex, s.length()));</span>
+<span class="fc" id="L34">        return result.toString();</span>
+    }
+
+    private String evaluate(String s) {
+<span class="pc bpc" id="L38" title="3 of 6 branches missed.">        switch (s) {</span>
+            case StringPlaceholderConst.TMP:
+<span class="fc" id="L40">                return System.getProperty(&quot;java.io.tmpdir&quot;);</span>
+            default:
+<span class="nc" id="L42">                throw new IllegalArgumentException(&quot;Unknown expression: &quot; + s);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

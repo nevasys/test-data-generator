@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PeopleNameProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.provider</a> &gt; <span class="el_source">PeopleNameProvider.java</span></div><h1>PeopleNameProvider.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.provider;
+
+import com.presidentio.testdatagenerator.cons.DelimiterConst;
+import com.presidentio.testdatagenerator.cons.GenderConst;
+import com.presidentio.testdatagenerator.cons.NameTypeConst;
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Random;
+
+/**
+ * Created by Vitalii_Gergel on 2/11/2015.
+ */
+<span class="fc" id="L19">public class PeopleNameProvider implements ValueProvider {</span>
+
+    private static String[] MALE_FIRST_NAMES;
+    private static String[] FEMALE_FIRST_NAMES;
+    private static String[] LAST_NAMES;
+<span class="fc" id="L24">    private Random random = new Random();</span>
+
+<span class="fc" id="L26">    private boolean firstName = true;</span>
+<span class="fc" id="L27">    private boolean lastName = true;</span>
+<span class="fc" id="L28">    private boolean male = true;</span>
+<span class="fc" id="L29">    private boolean female = true;</span>
+
+    private String[] getMaleNames() {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (MALE_FIRST_NAMES == null) {</span>
+<span class="fc" id="L33">            try (InputStream nameStream = DefaultValueProviderFactory.class.getClassLoader()</span>
+<span class="fc" id="L34">                    .getResourceAsStream(&quot;male-first-name.dat&quot;)) {</span>
+<span class="fc" id="L35">                String namesStr = IOUtils.toString(nameStream);</span>
+<span class="fc" id="L36">                MALE_FIRST_NAMES = namesStr.split(DelimiterConst.COMMA);</span>
+<span class="nc" id="L37">            } catch (IOException e) {</span>
+<span class="nc" id="L38">                throw new RuntimeException(&quot;Failed to load names&quot;, e);</span>
+<span class="fc" id="L39">            }</span>
+        }
+<span class="fc" id="L41">        return MALE_FIRST_NAMES;</span>
+    }
+
+    private String[] getFemaleNames() {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (FEMALE_FIRST_NAMES == null) {</span>
+<span class="fc" id="L46">            try (InputStream nameStream = DefaultValueProviderFactory.class.getClassLoader()</span>
+<span class="fc" id="L47">                    .getResourceAsStream(&quot;female-first-name.dat&quot;)) {</span>
+<span class="fc" id="L48">                String namesStr = IOUtils.toString(nameStream);</span>
+<span class="fc" id="L49">                FEMALE_FIRST_NAMES = namesStr.split(DelimiterConst.COMMA);</span>
+<span class="nc" id="L50">            } catch (IOException e) {</span>
+<span class="nc" id="L51">                throw new RuntimeException(&quot;Failed to load names&quot;, e);</span>
+<span class="fc" id="L52">            }</span>
+        }
+<span class="fc" id="L54">        return FEMALE_FIRST_NAMES;</span>
+    }
+
+    private String[] getLastNames() {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (LAST_NAMES == null) {</span>
+<span class="fc" id="L59">            try (InputStream nameStream = DefaultValueProviderFactory.class.getClassLoader()</span>
+<span class="fc" id="L60">                    .getResourceAsStream(&quot;last-name.dat&quot;)) {</span>
+<span class="fc" id="L61">                String namesStr = IOUtils.toString(nameStream);</span>
+<span class="fc" id="L62">                LAST_NAMES = namesStr.split(DelimiterConst.COMMA);</span>
+<span class="nc" id="L63">            } catch (IOException e) {</span>
+<span class="nc" id="L64">                throw new RuntimeException(&quot;Failed to load names&quot;, e);</span>
+<span class="fc" id="L65">            }</span>
+        }
+<span class="fc" id="L67">        return LAST_NAMES;</span>
+    }
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="fc" id="L72">        String gender = props.get(PropConst.GENDER);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (gender == null) {</span>
+<span class="fc" id="L74">            gender = GenderConst.ALL;</span>
+        }
+<span class="pc bpc" id="L76" title="3 of 4 branches missed.">        switch (gender) {</span>
+            case GenderConst.ALL:
+<span class="fc" id="L78">                male = true;</span>
+<span class="fc" id="L79">                female = true;</span>
+<span class="fc" id="L80">                break;</span>
+            case GenderConst.MALE:
+<span class="nc" id="L82">                male = true;</span>
+<span class="nc" id="L83">                female = false;</span>
+<span class="nc" id="L84">                break;</span>
+            case GenderConst.FEMALE:
+<span class="nc" id="L86">                male = false;</span>
+<span class="nc" id="L87">                female = true;</span>
+<span class="nc" id="L88">                break;</span>
+            default:
+<span class="nc" id="L90">                throw new IllegalArgumentException(&quot;Unknown gender: &quot; + gender);</span>
+        }
+<span class="fc" id="L92">        String type = props.get(PropConst.TYPE);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (type == null) {</span>
+<span class="fc" id="L94">            type = NameTypeConst.ALL;</span>
+        }
+<span class="pc bpc" id="L96" title="3 of 4 branches missed.">        switch (type) {</span>
+            case NameTypeConst.ALL:
+<span class="fc" id="L98">                firstName = true;</span>
+<span class="fc" id="L99">                lastName = true;</span>
+<span class="fc" id="L100">                break;</span>
+            case NameTypeConst.FIRST:
+<span class="nc" id="L102">                firstName = true;</span>
+<span class="nc" id="L103">                lastName = false;</span>
+<span class="nc" id="L104">                break;</span>
+            case NameTypeConst.LAST:
+<span class="nc" id="L106">                firstName = false;</span>
+<span class="nc" id="L107">                lastName = true;</span>
+<span class="nc" id="L108">                break;</span>
+            default:
+<span class="nc" id="L110">                throw new IllegalArgumentException(&quot;Unknown name type: &quot; + gender);</span>
+        }
+<span class="fc" id="L112">    }</span>
+
+    @Override
+    public Object nextValue(Context context, Field field) {
+<span class="fc" id="L116">        String result = &quot;&quot;;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (firstName) {</span>
+            String firstName;
+<span class="pc bpc" id="L119" title="2 of 4 branches missed.">            if (male &amp;&amp; female) {</span>
+<span class="fc" id="L120">                int index = random.nextInt(getMaleNames().length + getFemaleNames().length);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                if (index &lt; getMaleNames().length) {</span>
+<span class="fc" id="L122">                    firstName = getMaleNames()[index];</span>
+                } else {
+<span class="fc" id="L124">                    firstName = getFemaleNames()[index - getMaleNames().length];</span>
+                }
+<span class="fc" id="L126">            } else {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                if (male) {</span>
+<span class="nc" id="L128">                    int index = random.nextInt(getMaleNames().length);</span>
+<span class="nc" id="L129">                    firstName = getMaleNames()[index];</span>
+<span class="nc" id="L130">                } else {</span>
+<span class="nc" id="L131">                    int index = random.nextInt(getFemaleNames().length);</span>
+<span class="nc" id="L132">                    firstName = getFemaleNames()[index];</span>
+                }
+            }
+<span class="fc" id="L135">            result += firstName;</span>
+        }
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (lastName) {</span>
+<span class="fc" id="L138">            int index = random.nextInt(getLastNames().length);</span>
+<span class="fc" id="L139">            String lastName = getLastNames()[index];</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">            if (!result.isEmpty()) {</span>
+<span class="fc" id="L141">                result += DelimiterConst.SPACE;</span>
+            }
+<span class="fc" id="L143">            result += lastName;</span>
+        }
+<span class="fc" id="L145">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

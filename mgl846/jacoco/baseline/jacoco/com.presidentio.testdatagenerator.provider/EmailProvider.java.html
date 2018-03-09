@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.provider</a> &gt; <span class="el_source">EmailProvider.java</span></div><h1>EmailProvider.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.provider;
+
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.cons.TypeConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="fc" id="L25">public class EmailProvider implements ValueProvider {</span>
+
+    private RandomProvider randomProvider;
+
+<span class="fc" id="L29">    private String domain = &quot;email.com&quot;;</span>
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="fc" id="L33">        Map&lt;String, String&gt; propsCopy = new HashMap&lt;&gt;(props);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (propsCopy.containsKey(PropConst.DOMAIN)) {</span>
+<span class="fc" id="L35">            domain = propsCopy.remove(PropConst.DOMAIN);</span>
+        }
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (!propsCopy.isEmpty()) {</span>
+<span class="nc" id="L38">            throw new IllegalArgumentException(&quot;Redundant props for &quot; + getClass().getName() + &quot;: &quot; + propsCopy);</span>
+        }
+<span class="fc" id="L40">        randomProvider = new RandomProvider();</span>
+<span class="fc" id="L41">        randomProvider.init(Collections.&lt;String, String&gt;emptyMap());</span>
+
+<span class="fc" id="L43">    }</span>
+
+    @Override
+    public String nextValue(Context context, Field field) {
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (!field.getType().equals(TypeConst.STRING)) {</span>
+<span class="nc" id="L48">            throw new IllegalArgumentException(&quot;Illegal type for email required &quot; + TypeConst.STRING + &quot;: &quot;</span>
+<span class="nc" id="L49">                    + field.getType());</span>
+        }
+<span class="fc" id="L51">        return randomProvider.nextValue(context, field).toString() + &quot;@&quot; + domain;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
