@@ -1,0 +1,52 @@
+{
+    "output": {
+        "type": "file",
+        "props": {
+            "pathProvider":"const",
+            "file": "a.csv"
+        }
+    },
+    "templates": [
+        {
+            "id": "user1",
+            "count": 1,
+            "name": "user",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "long",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "userId++"
+                        }
+                    }
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "provider": {
+                        "name": "email"
+                    }
+                } ,
+                {
+                    "name": "name",
+                    "type": "string",
+                    "provider": {
+                        "name": "people-name"
+                    }
+                }
+            ]
+        }
+    ],
+    "variables": [
+        {
+            "name": "userId",
+            "type": "long",
+            "initValue": "1"
+        }
+    ],
+    "root": [
+        "user1"
+    ]
+}
