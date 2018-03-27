@@ -1,0 +1,279 @@
+{
+    "output": {
+        "type": "console",
+        "props":{}
+    },
+    "templates": [
+        {
+            "id": "customer1",
+            "count": 5,
+            "name": "customer",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "long",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "custId++"
+                        }
+                    }
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "provider": {
+                        "name": "people-name",
+                        "props":{
+                            "gender":"male"
+                        }
+                    }
+                },
+                {
+                    "name": "email",
+                    "type": "string",
+                    "provider": {
+                        "name": "email"
+                    }
+                } ,
+                {
+                    "name": "country",
+                    "type": "string",
+                    "provider": {
+                        "name": "country"
+                    }
+                },
+                {
+                    "name": "gender",
+                    "type": "string",
+                    "provider": {
+                        "name": "select",
+                        "props":{
+                            "items":"M,F"
+                        }
+                    }
+                },
+                {
+                    "name": "age",
+                    "type": "int",
+                    "provider": {
+                        "name": "random",
+                        "props":{
+                            "size":"2"
+                        }
+                    }
+                },
+                {
+                    "name": "quality",
+                    "type": "int",
+                    "provider": {
+                        "name": "select",
+                        "props":{
+                            "items":"1,2,3,4"
+                        }
+                    }
+                }
+            ],
+            "childs": [
+                "po1"
+            ]
+        },
+        {
+            "id": "po1",
+            "count": 2,
+            "name": "purchase_order",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "long",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "poId++"
+                        }
+                    }
+                },
+                {
+                    "name": "product",
+                    "type": "string",
+                    "provider": {
+                        "name": "random",
+                        "props": {
+                            "size": 45
+                        }
+                    }
+                },
+                {
+                    "name": "unit_price",
+                    "type": "int",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "unitP = new java.util.Random().nextInt(75);unitP"
+                        }
+                    }
+                },
+                {
+                    "name": "quantity",
+                    "type": "int",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "Math.max(unitP / 10,1)"
+                        }
+                    }
+                },
+                {
+                    "name": "custId",
+                    "type": "long",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "parent.id"
+                        }
+                    }
+                },
+                {
+                    "name": "date",
+                    "type": "long",
+                    "provider": {
+                        "name": "time"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "quality1",
+            "count": 1,
+            "name": "quality",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "1"
+                        }
+                    }
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "BRONZE"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "quality2",
+            "count": 1,
+            "name": "quality",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "2"
+                        }
+                    }
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "SILVER"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "quality3",
+            "count": 1,
+            "name": "quality",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "3"
+                        }
+                    }
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "GOLD"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "quality4",
+            "count": 1,
+            "name": "quality",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "4"
+                        }
+                    }
+                },
+                {
+                    "name": "description",
+                    "type": "string",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "PLATINUM"
+                        }
+                    }
+                }
+            ]
+        }
+
+    ],
+    "variables": [
+        {
+            "name": "custId",
+            "type": "long",
+            "initValue": "1"
+        },
+        {
+            "name": "poId",
+            "type": "long",
+            "initValue": "1"
+        },
+        {
+            "name": "unitP",
+            "type": "int",
+            "initValue": "1"
+        }
+    ],
+    "root": [
+        "customer1",
+        "quality1",
+        "quality2",
+        "quality3",
+        "quality4"
+    ]
+}
