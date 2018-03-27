@@ -33,7 +33,10 @@
                     "name": "email",
                     "type": "string",
                     "provider": {
-                        "name": "email"
+                        "name": "email",
+                        "props":{
+                            "domain":"mgl846.com"
+                        }
                     }
                 } ,
                 {
