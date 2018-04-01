@@ -1,7 +1,11 @@
 {
     "output": {
-        "type": "console",
-        "props":{}
+        "type": "file",
+        "props":{
+            "pathProvider":"const",
+            "file": "./a.sql",
+            "format": "sql"
+        }
     },
     "templates": [
         {
@@ -25,7 +29,7 @@
                     "provider": {
                         "name": "people-name",
                         "props":{
-                            "gender":"male"
+                            "gender":"female"
                         }
                     }
                 },
@@ -33,10 +37,7 @@
                     "name": "email",
                     "type": "string",
                     "provider": {
-                        "name": "email",
-                        "props":{
-                            "domain":"mgl846.com"
-                        }
+                        "name": "email"
                     }
                 } ,
                 {
@@ -48,11 +49,11 @@
                 },
                 {
                     "name": "gender",
-                    "type": "string",
+                    "type": "int",
                     "provider": {
                         "name": "select",
                         "props":{
-                            "items":"M,F"
+                            "items":"1,2,3"
                         }
                     }
                 },
@@ -98,11 +99,11 @@
                 },
                 {
                     "name": "product",
-                    "type": "string",
+                    "type": "int",
                     "provider": {
                         "name": "random",
                         "props": {
-                            "size": 45
+                            "size": 999
                         }
                     }
                 },
@@ -122,7 +123,7 @@
                     "provider": {
                         "name": "expr",
                         "props": {
-                            "expr": "Math.max(unitP / 10,1)"
+                            "expr": "if(unitP >35) return 1; else return 2;"
                         }
                     }
                 },
