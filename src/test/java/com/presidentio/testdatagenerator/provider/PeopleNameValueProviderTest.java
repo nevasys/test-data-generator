@@ -41,40 +41,42 @@ public class PeopleNameValueProviderTest {
         Assert.assertNotNull(valueProvider.nextValue(new Context(null, null, null), new Field(null, TypeConst.STRING, null)));
     }
     
-    @Test
+    @Test // TDG-AC-TB01
     public void gender_is_male() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.MALE, NameTypeConst.ALL);
         Assert.assertTrue(isMaleName(valueProvider, name)); // make sure we have a male name
     }
 
-    @Test
+    @Test // TDG-AC-TB02
     public void gender_is_female() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.FEMALE, NameTypeConst.ALL);
         Assert.assertTrue(isFemaleName(valueProvider, name)); // make sure we have a female name
     }
 
-    @Test
+    @Test // TDG-AC-TB04
     public void gender_is_all() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.ALL, NameTypeConst.ALL);
         Assert.assertTrue(isFemaleName(valueProvider, name) || isMaleName(valueProvider, name));
     }
 
-    @Test
+    @Test // TDG-AC-TB05
     public void gender_is_not_provided() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, null, NameTypeConst.ALL);
         Assert.assertTrue(isFemaleName(valueProvider, name) || isMaleName(valueProvider, name));
     }
 
+    // TDG-AC-TB06
     @Test(expected = IllegalArgumentException.class)
     public void unknown_gender() throws Exception{
         generateName(new PeopleNameProvider(), "other", NameTypeConst.ALL);
     }
     
     @Test
+    // TDG-AC-TB07
     public void first_name_only() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.ALL, NameTypeConst.FIRST);
@@ -82,6 +84,7 @@ public class PeopleNameValueProviderTest {
     }
     
     @Test
+    // TDG-AC-TB08
     public void last_name_only() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.ALL, NameTypeConst.LAST);
@@ -89,6 +92,7 @@ public class PeopleNameValueProviderTest {
     }
 
     @Test
+    // TDG-AC-TB09
     public void first_last_name_not_provided() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.ALL, null);
@@ -96,6 +100,7 @@ public class PeopleNameValueProviderTest {
     }    
     
     @Test
+    // TDG-AC-TB10
     public void first_and_last_name() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.ALL, NameTypeConst.ALL);
@@ -103,6 +108,7 @@ public class PeopleNameValueProviderTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    // TDG-AC-TB11
     public void first_and_last_invalid() throws Exception{
         ValueProvider valueProvider = new PeopleNameProvider();
         String name = generateName(valueProvider, GenderConst.ALL, "other");
