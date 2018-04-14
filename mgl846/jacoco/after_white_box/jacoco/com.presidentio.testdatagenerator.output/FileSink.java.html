@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileSink.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.output</a> &gt; <span class="el_source">FileSink.java</span></div><h1>FileSink.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * &lt;p&gt;
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * &lt;p&gt;
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.output;
+
+import com.presidentio.testdatagenerator.cons.PathProviderConst;
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.model.Template;
+import com.presidentio.testdatagenerator.output.formatter.*;
+import com.presidentio.testdatagenerator.output.path.ConstPathProvider;
+import com.presidentio.testdatagenerator.output.path.PathProvider;
+import com.presidentio.testdatagenerator.output.path.TimeBasedPathProvider;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="fc" id="L28">public class FileSink extends AbstractBufferedSink {</span>
+
+<span class="fc" id="L30">    private FormatterFactory formatterFactory = new DefaultFormatterFactory();</span>
+
+<span class="fc" id="L32">    private Map&lt;String, BufferedOutputStream&gt; outputStreams = new HashMap&lt;&gt;();</span>
+
+    private PathProvider pathProvider;
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="fc" id="L38">        pathProvider = getPathProvider(props);</span>
+<span class="fc" id="L39">        init(formatterFactory.buildFormatter(props));</span>
+<span class="fc" id="L40">    }</span>
+
+    @Override
+    public void write(Object partition, String formatted) {
+<span class="fc" id="L44">        String filePath = (String) partition;</span>
+        try {
+<span class="fc" id="L46">            getStream(filePath).write(formatted.getBytes());</span>
+<span class="nc" id="L47">        } catch (IOException e) {</span>
+<span class="nc" id="L48">            throw new IllegalArgumentException(&quot;Failed to save: &quot; + formatted, e);</span>
+<span class="fc" id="L49">        }</span>
+<span class="fc" id="L50">    }</span>
+
+    @Override
+    public void close() {
+<span class="fc" id="L54">        super.close();</span>
+        try {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            for (BufferedOutputStream bufferedOutputStream : outputStreams.values()) {</span>
+<span class="fc" id="L57">                bufferedOutputStream.close();</span>
+<span class="fc" id="L58">            }</span>
+<span class="nc" id="L59">        } catch (IOException e) {</span>
+<span class="nc" id="L60">            e.printStackTrace();</span>
+<span class="fc" id="L61">        }</span>
+<span class="fc" id="L62">    }</span>
+
+    @Override
+    protected Object getPartition(Template template, Map&lt;String, Object&gt; map) {
+<span class="fc" id="L66">        return pathProvider.getFilePath(template, map);</span>
+    }
+
+    private BufferedOutputStream getStream(String filePath) throws FileNotFoundException {
+<span class="fc" id="L70">        BufferedOutputStream stream = outputStreams.get(filePath);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (stream == null) {</span>
+<span class="fc" id="L72">            File outFile = new File(filePath);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (!outFile.getParentFile().exists()) {</span>
+<span class="fc" id="L74">                outFile.getParentFile().mkdirs();</span>
+            }
+<span class="fc" id="L76">            stream = new BufferedOutputStream(new FileOutputStream(outFile));</span>
+<span class="fc" id="L77">            outputStreams.put(filePath, stream);</span>
+        }
+<span class="fc" id="L79">        return stream;</span>
+    }
+
+    private PathProvider getPathProvider(Map&lt;String, String&gt; props) {
+<span class="fc" id="L83">        String pathProviderType = props.get(PropConst.PATH_PROVIDER);</span>
+        PathProvider pathProvider;
+<span class="pc bpc" id="L85" title="4 of 10 branches missed.">        switch (pathProviderType) {</span>
+            case PathProviderConst.CONST:
+<span class="fc" id="L87">                pathProvider = new ConstPathProvider();</span>
+<span class="fc" id="L88">                break;</span>
+            case PathProviderConst.TIME:
+<span class="fc" id="L90">                pathProvider = new TimeBasedPathProvider();</span>
+<span class="fc" id="L91">                break;</span>
+            default:
+<span class="nc" id="L93">                throw new IllegalArgumentException(&quot;unknown path provider: &quot; + pathProviderType);</span>
+        }
+<span class="fc" id="L95">        pathProvider.init(props);</span>
+<span class="fc" id="L96">        return pathProvider;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

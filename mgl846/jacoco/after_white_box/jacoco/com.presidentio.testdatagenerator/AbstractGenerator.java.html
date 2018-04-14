@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator</a> &gt; <span class="el_source">AbstractGenerator.java</span></div><h1>AbstractGenerator.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator;
+
+import com.presidentio.testdatagenerator.cons.TypeConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Schema;
+import com.presidentio.testdatagenerator.model.Template;
+import com.presidentio.testdatagenerator.model.Variable;
+import com.presidentio.testdatagenerator.output.Sink;
+import com.presidentio.testdatagenerator.output.SinkFactory;
+import com.presidentio.testdatagenerator.provider.DefaultValueProviderFactory;
+import com.presidentio.testdatagenerator.provider.ValueProviderFactory;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Created by presidentio on 24.04.15.
+ */
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">public abstract class AbstractGenerator implements Generator {</span>
+
+<span class="fc" id="L23">    private ValueProviderFactory valueProviderFactory = new DefaultValueProviderFactory();</span>
+<span class="fc" id="L24">    private SinkFactory sinkFactory = new SinkFactory();</span>
+
+    @Override
+    public void generate(Schema schema) {
+<span class="fc" id="L28">        validateSchema(schema);</span>
+<span class="fc" id="L29">        Context context = buildContext(schema);</span>
+<span class="fc" id="L30">        generate(context, schema);</span>
+<span class="fc" id="L31">    }</span>
+
+    protected abstract void generate(Context context, Schema schema);
+
+    private void validateSchema(Schema schema) {
+<span class="pc bpc" id="L36" title="2 of 4 branches missed.">        assert schema.getOutput() != null;</span>
+<span class="fc" id="L37">        Set&lt;String&gt; templateIds = new HashSet&lt;&gt;(schema.getTemplates().size());</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Template template : schema.getTemplates()) {</span>
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">            assert !templateIds.contains(template.getId());</span>
+<span class="fc" id="L40">            templateIds.add(template.getId());</span>
+<span class="pc bpc" id="L41" title="2 of 8 branches missed.">            assert !(template.getExtend() == null ^ template.getExtendTemplate() == null);</span>
+<span class="fc" id="L42">        }</span>
+<span class="fc" id="L43">    }</span>
+
+    private Context buildContext(Schema schema) {
+<span class="fc" id="L46">        Map&lt;String, Object&gt; variables = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (Variable variable : schema.getVariables()) {</span>
+            Object initValue;
+<span class="pc bpc" id="L49" title="4 of 5 branches missed.">            switch (variable.getType()) {</span>
+                case TypeConst.STRING:
+<span class="nc" id="L51">                    initValue = variable.getInitValue();</span>
+<span class="nc" id="L52">                    break;</span>
+                case TypeConst.LONG:
+<span class="fc" id="L54">                    initValue = Long.valueOf(variable.getInitValue());</span>
+<span class="fc" id="L55">                    break;</span>
+                case TypeConst.INT:
+<span class="nc" id="L57">                    initValue = Integer.valueOf(variable.getInitValue());</span>
+<span class="nc" id="L58">                    break;</span>
+                case TypeConst.BOOLEAN:
+<span class="nc" id="L60">                    initValue = Boolean.valueOf(variable.getInitValue());</span>
+<span class="nc" id="L61">                    break;</span>
+                default:
+<span class="nc" id="L63">                    throw new IllegalArgumentException(&quot;Variable type not known: &quot; + variable.getType());</span>
+            }
+
+<span class="fc" id="L66">            variables.put(variable.getName(), initValue);</span>
+<span class="fc" id="L67">        }</span>
+
+<span class="fc" id="L69">        Sink sink = sinkFactory.getSink(schema.getOutput());</span>
+
+<span class="fc" id="L71">        Map&lt;String, Template&gt; templates = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for (Template template : schema.getTemplates()) {</span>
+<span class="fc" id="L73">            templates.put(template.getId(), template);</span>
+<span class="fc" id="L74">        }</span>
+
+<span class="fc" id="L76">        return new Context(templates, variables, sink);</span>
+    }
+
+    public ValueProviderFactory getValueProviderFactory() {
+<span class="fc" id="L80">        return valueProviderFactory;</span>
+    }
+
+    public void setValueProviderFactory(ValueProviderFactory valueProviderFactory) {
+<span class="fc" id="L84">        this.valueProviderFactory = valueProviderFactory;</span>
+<span class="fc" id="L85">    }</span>
+
+    public SinkFactory getSinkFactory() {
+<span class="fc" id="L88">        return sinkFactory;</span>
+    }
+
+    public void setSinkFactory(SinkFactory sinkFactory) {
+<span class="nc" id="L92">        this.sinkFactory = sinkFactory;</span>
+<span class="nc" id="L93">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
