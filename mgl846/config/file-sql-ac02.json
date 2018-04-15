@@ -3,7 +3,7 @@
         "type": "file",
         "props":{
             "pathProvider":"const",
-            "file": "./mgl846/test-results/res-ac02.sql",
+            "file": "${tmp}/mgl846/test-results/res-ac02.sql",
             "format": "sql"
         }
     },
