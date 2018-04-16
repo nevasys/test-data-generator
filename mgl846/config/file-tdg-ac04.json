@@ -28,7 +28,7 @@
                     "provider": {
                         "name": "people-name",
                         "props":{
-                            "gender":"female"
+                            "type":"all"
                         }
                     }
                 },
