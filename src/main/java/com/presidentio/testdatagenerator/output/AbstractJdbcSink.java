@@ -38,7 +38,7 @@ public abstract class AbstractJdbcSink extends AbstractBufferedSink {
         try {
             connection = prepareConnection(connectionUrl, jdbcDriver);
         } catch (SQLException | IOException e) {
-            throw new IllegalStateException("");
+            throw new IllegalStateException(e);
         }
     }
 
