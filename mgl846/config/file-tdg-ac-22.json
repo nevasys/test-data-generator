@@ -1,9 +1,8 @@
 {
     "output": {
-        "type": "file",
         "props": {
             "pathProvider":"const",
-            "file": "C:/Output/a.csv"
+            "file": "./a.csv"
         }
     },
     "templates": [
