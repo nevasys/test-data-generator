@@ -1,9 +1,9 @@
 {
     "output": {
         "type": "file",
-        "props": {
+        "props":{
             "pathProvider":"const",
-            "file": "C:/Output/a.sql",
+            "file": "${tmp}/mgl846/test-results/res-ac23.sql",
             "format": "sql"
         }
     },
@@ -29,7 +29,7 @@
                     "provider": {
                         "name": "people-name",
                         "props":{
-                            "gender":"male"
+                            "gender":"female"
                         }
                     }
                 },
@@ -52,11 +52,11 @@
                 },
                 {
                     "name": "gender",
-                    "type": "string",
+                    "type": "int",
                     "provider": {
                         "name": "select",
                         "props":{
-                            "items":"M,F"
+                            "items":"1,2,3"
                         }
                     }
                 },
@@ -102,11 +102,11 @@
                 },
                 {
                     "name": "product",
-                    "type": "string",
+                    "type": "int",
                     "provider": {
                         "name": "random",
                         "props": {
-                            "size": 45
+                            "size": 999
                         }
                     }
                 },
@@ -126,7 +126,7 @@
                     "provider": {
                         "name": "expr",
                         "props": {
-                            "expr": "Math.max(unitP / 10,1)"
+                            "expr": "if(unitP >35) return 1; else return 2;"
                         }
                     }
                 },

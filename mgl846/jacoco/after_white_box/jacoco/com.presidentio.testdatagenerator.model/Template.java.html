@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Template.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.model</a> &gt; <span class="el_source">Template.java</span></div><h1>Template.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.model;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L21">public class Template {</span>
+
+    private String id;
+
+    private String extend;
+
+    @JsonIgnore
+    private Template extendTemplate;
+
+    private Integer count;
+
+    private String name;
+
+    private List&lt;Field&gt; fields;
+
+<span class="fc" id="L36">    private List&lt;String&gt; childs = new ArrayList&lt;&gt;();</span>
+
+    public String getId() {
+<span class="fc" id="L39">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="fc" id="L43">        this.id = id;</span>
+<span class="fc" id="L44">    }</span>
+
+    public String getExtend() {
+<span class="fc" id="L47">        return extend;</span>
+    }
+
+    public void setExtend(String extend) {
+<span class="fc" id="L51">        this.extend = extend;</span>
+<span class="fc" id="L52">    }</span>
+
+    public Template getExtendTemplate() {
+<span class="fc" id="L55">        return extendTemplate;</span>
+    }
+
+    public void setExtendTemplate(Template extendTemplate) {
+<span class="fc" id="L59">        this.extendTemplate = extendTemplate;</span>
+<span class="fc" id="L60">    }</span>
+
+    public Integer getCount() {
+<span class="pc bpc" id="L63" title="3 of 4 branches missed.">        if (count == null &amp;&amp; extendTemplate != null) {</span>
+<span class="nc" id="L64">            return extendTemplate.getCount();</span>
+        }
+<span class="fc" id="L66">        return count;</span>
+    }
+
+    public void setCount(Integer count) {
+<span class="fc" id="L70">        this.count = count;</span>
+<span class="fc" id="L71">    }</span>
+
+    public String getName() {
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        if (name == null &amp;&amp; extendTemplate != null) {</span>
+<span class="fc" id="L75">            return extendTemplate.getName();</span>
+        }
+<span class="fc" id="L77">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L81">        this.name = name;</span>
+<span class="fc" id="L82">    }</span>
+
+    public List&lt;Field&gt; getFields() {
+<span class="fc" id="L85">        List&lt;Field&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">        if (extendTemplate != null &amp;&amp; extendTemplate.getFields() != null) {</span>
+<span class="fc" id="L87">            result.addAll(extendTemplate.getFields());</span>
+        }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (fields != null) {</span>
+<span class="fc" id="L90">            result.addAll(fields);</span>
+        }
+<span class="fc" id="L92">        return result;</span>
+    }
+
+    public void setFields(List&lt;Field&gt; fields) {
+<span class="fc" id="L96">        this.fields = fields;</span>
+<span class="fc" id="L97">    }</span>
+
+    public List&lt;String&gt; getChilds() {
+<span class="fc" id="L100">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">        if (extendTemplate != null &amp;&amp; extendTemplate.getChilds() != null) {</span>
+<span class="fc" id="L102">            result.addAll(extendTemplate.getChilds());</span>
+        }
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (childs != null) {</span>
+<span class="fc" id="L105">            result.addAll(childs);</span>
+        }
+<span class="fc" id="L107">        return result;</span>
+    }
+
+    public void setChilds(List&lt;String&gt; childs) {
+<span class="fc" id="L111">        this.childs = childs;</span>
+<span class="fc" id="L112">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L117" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="fc" id="L119">        Template template = (Template) o;</span>
+
+<span class="pc bpc" id="L121" title="2 of 6 branches missed.">        if (name != null ? !name.equals(template.name) : template.name != null) return false;</span>
+
+<span class="fc" id="L123">        return true;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        return name != null ? name.hashCode() : 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

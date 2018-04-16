@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SchemaBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.parser</a> &gt; <span class="el_source">SchemaBuilder.java</span></div><h1>SchemaBuilder.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.parser;
+
+import com.presidentio.testdatagenerator.model.Schema;
+import com.presidentio.testdatagenerator.model.Template;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Vitalii_Gergel on 3/2/2015.
+ */
+<span class="fc" id="L14">public class SchemaBuilder {</span>
+
+<span class="fc" id="L16">    private List&lt;Schema&gt; schemas = new ArrayList&lt;&gt;();</span>
+
+    public SchemaBuilder fromResource(String resource) {
+<span class="fc" id="L19">        SchemaSerializer schemaSerializer = new JsonSchemaSerializer();</span>
+        try {
+<span class="fc" id="L21">            Schema schema = schemaSerializer.deserialize(</span>
+<span class="fc" id="L22">                    SchemaBuilder.class.getClassLoader().getResourceAsStream(resource));</span>
+<span class="fc" id="L23">            schemas.add(schema);</span>
+<span class="fc" id="L24">            return this;</span>
+<span class="nc" id="L25">        } catch (IOException e) {</span>
+<span class="nc" id="L26">            throw new IllegalStateException(e);</span>
+        }
+    }
+
+    public SchemaBuilder fromFile(String file) {
+<span class="nc" id="L31">        SchemaSerializer schemaSerializer = new JsonSchemaSerializer();</span>
+        try {
+<span class="nc" id="L33">            Schema schema = schemaSerializer.deserialize(new FileInputStream(file));</span>
+<span class="nc" id="L34">            schemas.add(schema);</span>
+<span class="nc" id="L35">            return this;</span>
+<span class="nc" id="L36">        } catch (IOException e) {</span>
+<span class="nc" id="L37">            throw new IllegalStateException(e);</span>
+        }
+    }
+
+    public Schema build() {
+<span class="fc" id="L42">        Schema schema = null;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (Schema schema1 : schemas) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (schema == null) {</span>
+<span class="fc" id="L45">                schema = schema1;</span>
+            } else {
+<span class="fc" id="L47">                schema = merge(schema, schema1);</span>
+            }
+<span class="fc" id="L49">        }</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (schema != null) {</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            for (Template template : schema.getTemplates()) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                if (template.getExtend() != null) {</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                    for (Template parentTemplate : schema.getTemplates()) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                        if (parentTemplate.getId().equals(template.getExtend())) {</span>
+<span class="fc" id="L55">                            template.setExtendTemplate(parentTemplate);</span>
+<span class="fc" id="L56">                            break;</span>
+                        }
+<span class="fc" id="L58">                    }</span>
+                }
+<span class="fc" id="L60">            }</span>
+        }
+<span class="fc" id="L62">        return schema;</span>
+    }
+
+    private Schema merge(Schema schema1, Schema schema2) {
+<span class="fc" id="L66">        schema1.getTemplates().addAll(schema2.getTemplates());</span>
+<span class="fc" id="L67">        schema1.getRoot().addAll(schema2.getRoot());</span>
+<span class="fc" id="L68">        schema1.getVariables().addAll(schema2.getVariables());</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">        if (schema1.getOutput() != null &amp;&amp; schema2.getOutput() != null) {</span>
+<span class="nc" id="L70">            throw new IllegalArgumentException(&quot;Can't merge two outputs&quot;);</span>
+        }
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (schema1.getOutput() == null) {</span>
+<span class="nc" id="L73">            schema1.setOutput(schema2.getOutput());</span>
+        }
+<span class="fc" id="L75">        return schema1;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CounterProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.provider</a> &gt; <span class="el_source">CounterProvider.java</span></div><h1>CounterProvider.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * &lt;p&gt;
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * &lt;p&gt;
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.provider;
+
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+
+import java.util.Map;
+
+<span class="fc" id="L22">public class CounterProvider implements ValueProvider {</span>
+
+    public static final String INC = &quot;++&quot;;
+    public static final String DEC = &quot;--&quot;;
+    public static final String EQ = &quot;==&quot;;
+
+    private String var;
+
+<span class="fc" id="L30">    private String op = &quot;++&quot;;</span>
+
+    @Override
+    public void init(Map&lt;String, String&gt; props) {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (props.containsKey(PropConst.OP)) {</span>
+<span class="nc" id="L35">            op = props.get(PropConst.OP);</span>
+        }
+<span class="fc" id="L37">        var = props.get(PropConst.VAR);</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (var == null) {</span>
+<span class="nc" id="L39">            throw new IllegalArgumentException(&quot;Var does not specified or null&quot;);</span>
+        }
+<span class="fc" id="L41">    }</span>
+
+    @Override
+    public Object nextValue(Context context, Field field) {
+<span class="fc" id="L45">        Map&lt;String, Object&gt; vars = context.getVariables();</span>
+        Long varVal;
+<span class="fc" id="L47">        synchronized (context.getVariables()) {</span>
+<span class="fc" id="L48">            varVal = Long.valueOf(vars.get(var).toString());</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">            if (varVal == null) {</span>
+<span class="nc" id="L50">                varVal = 0L;</span>
+            }
+            Long newVal;
+
+<span class="pc bpc" id="L54" title="3 of 4 branches missed.">            switch (op) {</span>
+                case INC:
+<span class="fc" id="L56">                    newVal = varVal + 1;</span>
+<span class="fc" id="L57">                    break;</span>
+                case DEC:
+<span class="nc" id="L59">                    newVal = varVal - 1;</span>
+<span class="nc" id="L60">                    break;</span>
+                case EQ:
+<span class="nc" id="L62">                    newVal = varVal;</span>
+<span class="nc" id="L63">                    break;</span>
+                default:
+<span class="nc" id="L65">                    throw new RuntimeException(&quot;Unknown operation: &quot; + op);</span>
+            }
+<span class="fc" id="L67">            vars.put(var, newVal);</span>
+<span class="fc" id="L68">        }</span>
+<span class="fc" id="L69">        return TypeConverter.convert(varVal.toString(), field.getType());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.context</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/**
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.presidentio.testdatagenerator.context;
+
+import com.presidentio.testdatagenerator.model.Template;
+import com.presidentio.testdatagenerator.output.Sink;
+
+import java.util.Map;
+
+public class Context {
+
+    private Parent parent;
+
+    private Map&lt;String, Template&gt; templates;
+
+    private Map&lt;String, Object&gt; variables;
+
+    private Sink sink;
+
+<span class="fc" id="L31">    public Context(Map&lt;String, Template&gt; templates, Map&lt;String, Object&gt; variables, Sink sink) {</span>
+<span class="fc" id="L32">        this.templates = templates;</span>
+<span class="fc" id="L33">        this.variables = variables;</span>
+<span class="fc" id="L34">        this.sink = sink;</span>
+<span class="fc" id="L35">    }</span>
+
+<span class="fc" id="L37">    public Context(Context parentContext, Map&lt;String, Object&gt; entity) {</span>
+<span class="fc" id="L38">        parent = new Parent(entity, parentContext.getParent());</span>
+<span class="fc" id="L39">        templates = parentContext.getTemplates();</span>
+<span class="fc" id="L40">        variables = parentContext.getVariables();</span>
+<span class="fc" id="L41">        sink = parentContext.getSink();</span>
+<span class="fc" id="L42">    }</span>
+
+    public Parent getParent() {
+<span class="fc" id="L45">        return parent;</span>
+    }
+
+    public Map&lt;String, Object&gt; getVariables() {
+<span class="fc" id="L49">        return variables;</span>
+    }
+
+    public Sink getSink() {
+<span class="fc" id="L53">        return sink;</span>
+    }
+
+    public Map&lt;String, Template&gt; getTemplates() {
+<span class="fc" id="L57">        return templates;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpressionBenchmark.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Test data generator</a> &gt; <a href="index.source.html" class="el_package">com.presidentio.testdatagenerator.benchmark</a> &gt; <span class="el_source">ExpressionBenchmark.java</span></div><h1>ExpressionBenchmark.java</h1><pre class="source lang-java linenums">package com.presidentio.testdatagenerator.benchmark;
+
+import com.presidentio.testdatagenerator.cons.PropConst;
+import com.presidentio.testdatagenerator.cons.TypeConst;
+import com.presidentio.testdatagenerator.context.Context;
+import com.presidentio.testdatagenerator.model.Field;
+import com.presidentio.testdatagenerator.provider.ExpressionProvider;
+import com.presidentio.testdatagenerator.provider.ValueProvider;
+import org.openjdk.jmh.annotations.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by Vitalii_Gergel on 3/19/2015.
+ */
+@Fork(1)
+@Warmup(iterations = 3)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Measurement(iterations = 10)
+@State(Scope.Benchmark)
+<span class="nc" id="L23">public class ExpressionBenchmark {</span>
+
+    private Context context;
+    private ValueProvider valueProvider;
+    private Field field;
+
+    @Setup
+    public void init() {
+<span class="nc" id="L31">        Map&lt;String, String&gt; props = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L32">        String propExpr = &quot;a + b&quot;;</span>
+<span class="nc" id="L33">        props.put(PropConst.EXPR, propExpr);</span>
+<span class="nc" id="L34">        valueProvider = new ExpressionProvider();</span>
+<span class="nc" id="L35">        valueProvider.init(props);</span>
+<span class="nc" id="L36">        Map&lt;String, Object&gt; variables = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L37">        variables.put(&quot;a&quot;, &quot;abc&quot;);</span>
+<span class="nc" id="L38">        variables.put(&quot;b&quot;, &quot;zxc&quot;);</span>
+<span class="nc" id="L39">        context = new Context(null, variables, null);</span>
+<span class="nc" id="L40">        field = new Field(null, TypeConst.STRING, null);</span>
+<span class="nc" id="L41">    }</span>
+
+    @Benchmark
+    public void measureExpression() {
+<span class="nc" id="L45">        valueProvider.nextValue(context, field);</span>
+<span class="nc" id="L46">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
