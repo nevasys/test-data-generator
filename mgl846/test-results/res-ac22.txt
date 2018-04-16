@@ -1,0 +1,6 @@
+Exception in thread "main" java.lang.NullPointerException
+	at com.presidentio.testdatagenerator.output.SinkFactory.getSink(SinkFactory.java:23)
+	at com.presidentio.testdatagenerator.AbstractGenerator.buildContext(AbstractGenerator.java:69)
+	at com.presidentio.testdatagenerator.AbstractGenerator.generate(AbstractGenerator.java:29)
+	at com.presidentio.testdatagenerator.Starter.start(Starter.java:57)
+	at com.presidentio.testdatagenerator.Starter.main(Starter.java:42)
