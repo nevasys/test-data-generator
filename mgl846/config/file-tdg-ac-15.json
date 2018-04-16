@@ -1,16 +1,16 @@
 {
     "output": {
         "type": "file",
-        "props":{
+        "props": {
             "pathProvider":"const",
-            "file": "${tmp}/mgl846/test-results/res-ac23.sql",
+            "file": "C:/Output/a.sql",
             "format": "sql"
         }
     },
     "templates": [
         {
             "id": "customer1",
-            "count": 50000,
+            "count": 5,
             "name": "customer",
             "fields": [
                 {
@@ -29,7 +29,7 @@
                     "provider": {
                         "name": "people-name",
                         "props":{
-                            "gender":"female"
+                            "gender":"other"
                         }
                     }
                 },
@@ -52,11 +52,11 @@
                 },
                 {
                     "name": "gender",
-                    "type": "int",
+                    "type": "string",
                     "provider": {
                         "name": "select",
                         "props":{
-                            "items":"1,2,3"
+                            "items":"M,F"
                         }
                     }
                 },
@@ -102,11 +102,11 @@
                 },
                 {
                     "name": "product",
-                    "type": "int",
+                    "type": "string",
                     "provider": {
                         "name": "random",
                         "props": {
-                            "size": 999
+                            "size": 45
                         }
                     }
                 },
@@ -126,7 +126,7 @@
                     "provider": {
                         "name": "expr",
                         "props": {
-                            "expr": "if(unitP >35) return 1; else return 2;"
+                            "expr": "Math.max(unitP / 10,1)"
                         }
                     }
                 },
