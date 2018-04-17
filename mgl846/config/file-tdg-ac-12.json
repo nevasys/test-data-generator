@@ -3,8 +3,7 @@
         "type": "file",
         "props": {
             "pathProvider":"const",
-            "file": "C:/Output/a.sql",
-            "format": "sql"
+            "file": "/home/franck/new/a.csv"
         }
     },
     "templates": [
