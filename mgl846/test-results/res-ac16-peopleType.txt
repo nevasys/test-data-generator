@@ -1,14 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: com.presidentio.testdatagenerator.SqlFileTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.08 sec <<< FAILURE!
-testGenerate(com.presidentio.testdatagenerator.SqlFileTest)  Time elapsed: 0.07 sec  <<< ERROR!
-java.lang.NumberFormatException: For input string: "test@email.com"
-	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
-	at java.lang.Integer.parseInt(Integer.java:580)
-	at java.lang.Integer.valueOf(Integer.java:766)
-	at com.presidentio.testdatagenerator.provider.ConstValueProvider.nextValue(ConstValueProvider.java:49)
-	at com.presidentio.testdatagenerator.GenerateTask.generateEntity(GenerateTask.java:47)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.04 sec <<< FAILURE!
+testGenerate(com.presidentio.testdatagenerator.SqlFileTest)  Time elapsed: 0.04 sec  <<< ERROR!
+java.lang.IllegalArgumentException: Unknown name type: all
+	at com.presidentio.testdatagenerator.provider.PeopleNameProvider.init(PeopleNameProvider.java:110)
+	at com.presidentio.testdatagenerator.provider.DefaultValueProviderFactory.buildValueProvider(DefaultValueProviderFactory.java:65)
+	at com.presidentio.testdatagenerator.GenerateTask.generateEntity(GenerateTask.java:46)
 	at com.presidentio.testdatagenerator.GenerateTask.compute(GenerateTask.java:81)
 	at com.presidentio.testdatagenerator.InitTask.compute(InitTask.java:58)
 	at com.presidentio.testdatagenerator.OneTimeGenerator.generate(OneTimeGenerator.java:36)
