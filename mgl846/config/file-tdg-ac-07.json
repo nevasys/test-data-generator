@@ -3,15 +3,15 @@
         "type": "file",
         "props": {
             "pathProvider":"const",
-            "file": "${tmp}/||.csv",
+            "file": "C:/Output/||.sql",
             "format": "sql"
         }
     },
     "templates": [
         {
-            "id": "customer1",
-            "count": 5,
-            "name": "customer",
+            "id": "user1",
+            "count": 10,
+            "name": "user",
             "fields": [
                 {
                     "name": "id",
@@ -19,17 +19,7 @@
                     "provider": {
                         "name": "expr",
                         "props": {
-                            "expr": "custId++"
-                        }
-                    }
-                },
-                {
-                    "name": "name",
-                    "type": "string",
-                    "provider": {
-                        "name": "people-name",
-                        "props":{
-                            "gender":"male"
+                            "expr": "userId++"
                         }
                     }
                 },
@@ -37,58 +27,25 @@
                     "name": "email",
                     "type": "string",
                     "provider": {
-                        "name": "email",
-                        "props":{
-                            "domain":"mgl846.com"
-                        }
+                        "name": "email"
                     }
                 } ,
                 {
-                    "name": "country",
+                    "name": "name",
                     "type": "string",
                     "provider": {
-                        "name": "country"
-                    }
-                },
-                {
-                    "name": "gender",
-                    "type": "string",
-                    "provider": {
-                        "name": "select",
-                        "props":{
-                            "items":"M,F"
-                        }
-                    }
-                },
-                {
-                    "name": "age",
-                    "type": "int",
-                    "provider": {
-                        "name": "random",
-                        "props":{
-                            "size":"2"
-                        }
-                    }
-                },
-                {
-                    "name": "quality",
-                    "type": "int",
-                    "provider": {
-                        "name": "select",
-                        "props":{
-                            "items":"1,2,3,4"
-                        }
+                        "name": "people-name"
                     }
                 }
             ],
             "childs": [
-                "po1"
+                "training1"
             ]
         },
         {
-            "id": "po1",
-            "count": 2,
-            "name": "purchase_order",
+            "id": "user2",
+            "count": 1,
+            "name": "user",
             "fields": [
                 {
                     "name": "id",
@@ -96,42 +53,62 @@
                     "provider": {
                         "name": "expr",
                         "props": {
-                            "expr": "poId++"
+                            "expr": "userId++"
                         }
                     }
                 },
                 {
-                    "name": "product",
+                    "name": "email",
+                    "type": "string",
+                    "provider": {
+                        "name": "const",
+                        "props": {
+                            "value": "test@email.com"
+                        }
+                    }
+                }
+            ],
+            "childs": [
+                "training1"
+            ]
+        },
+        {
+            "id": "training1",
+            "count": 5,
+            "name": "training",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "long",
+                    "provider": {
+                        "name": "expr",
+                        "props": {
+                            "expr": "trainingId++"
+                        }
+                    }
+                },
+                {
+                    "name": "name",
                     "type": "string",
                     "provider": {
                         "name": "random",
                         "props": {
-                            "size": 45
+                            "size": 10
                         }
                     }
                 },
                 {
-                    "name": "unit_price",
+                    "name": "week",
                     "type": "int",
                     "provider": {
                         "name": "expr",
                         "props": {
-                            "expr": "unitP = new java.util.Random().nextInt(75);unitP"
+                            "expr": "0 | 1 | 8"
                         }
                     }
                 },
                 {
-                    "name": "quantity",
-                    "type": "int",
-                    "provider": {
-                        "name": "expr",
-                        "props": {
-                            "expr": "Math.max(unitP / 10,1)"
-                        }
-                    }
-                },
-                {
-                    "name": "custId",
+                    "name": "userId",
                     "type": "long",
                     "provider": {
                         "name": "expr",
@@ -139,148 +116,79 @@
                             "expr": "parent.id"
                         }
                     }
-                },
+                }
+            ],
+            "childs":[
+                "exercise1"
+            ]
+        },
+        {
+            "id": "exercise1",
+            "count": 5,
+            "name": "exercise",
+            "fields": [
                 {
-                    "name": "date",
+                    "name": "id",
                     "type": "long",
                     "provider": {
-                        "name": "time"
-                    }
-                }
-            ]
-        },
-        {
-            "id": "quality1",
-            "count": 1,
-            "name": "quality",
-            "fields": [
-                {
-                    "name": "id",
-                    "type": "int",
-                    "provider": {
-                        "name": "const",
+                        "name": "expr",
                         "props": {
-                            "value": "1"
+                            "expr": "exerciseId++"
                         }
                     }
                 },
                 {
-                    "name": "description",
+                    "name": "name",
                     "type": "string",
                     "provider": {
-                        "name": "const",
+                        "name": "random",
                         "props": {
-                            "value": "BRONZE"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "id": "quality2",
-            "count": 1,
-            "name": "quality",
-            "fields": [
-                {
-                    "name": "id",
-                    "type": "int",
-                    "provider": {
-                        "name": "const",
-                        "props": {
-                            "value": "2"
+                            "size": 10
                         }
                     }
                 },
                 {
-                    "name": "description",
-                    "type": "string",
+                    "name": "userId",
+                    "type": "long",
                     "provider": {
-                        "name": "const",
+                        "name": "expr",
                         "props": {
-                            "value": "SILVER"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "id": "quality3",
-            "count": 1,
-            "name": "quality",
-            "fields": [
-                {
-                    "name": "id",
-                    "type": "int",
-                    "provider": {
-                        "name": "const",
-                        "props": {
-                            "value": "3"
+                            "expr": "parent.parent.id"
                         }
                     }
                 },
                 {
-                    "name": "description",
-                    "type": "string",
+                    "name": "trainingId",
+                    "type": "long",
                     "provider": {
-                        "name": "const",
+                        "name": "expr",
                         "props": {
-                            "value": "GOLD"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "id": "quality4",
-            "count": 1,
-            "name": "quality",
-            "fields": [
-                {
-                    "name": "id",
-                    "type": "int",
-                    "provider": {
-                        "name": "const",
-                        "props": {
-                            "value": "4"
-                        }
-                    }
-                },
-                {
-                    "name": "description",
-                    "type": "string",
-                    "provider": {
-                        "name": "const",
-                        "props": {
-                            "value": "PLATINUM"
+                            "expr": "parent.id"
                         }
                     }
                 }
             ]
         }
-
     ],
     "variables": [
         {
-            "name": "custId",
+            "name": "userId",
             "type": "long",
             "initValue": "1"
         },
         {
-            "name": "poId",
+            "name": "trainingId",
             "type": "long",
             "initValue": "1"
         },
         {
-            "name": "unitP",
-            "type": "int",
+            "name": "exerciseId",
+            "type": "long",
             "initValue": "1"
         }
     ],
     "root": [
-        "customer1",
-        "quality1",
-        "quality2",
-        "quality3",
-        "quality4"
+        "user1",
+        "user2"
     ]
 }
